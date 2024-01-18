@@ -107,7 +107,7 @@ def unload_addon(path: str):
     bpy.ops.preferences.addon_disable(module=module_name)
 
 
-class ADDEV_AddNewAddon_Operator(bpy.types.Operator, ImportHelper):
+class ADDEV_OT_AddNewAddon(bpy.types.Operator, ImportHelper):
     bl_idname = "addev.add_new_addon"
     bl_label = "Add New Addon"
     bl_description = "Add a new addon to the dev list"
@@ -143,7 +143,7 @@ class ADDEV_AddNewAddon_Operator(bpy.types.Operator, ImportHelper):
         return {"FINISHED"}
 
 
-class ADDEV_AddSinglePyAddon_Operator(bpy.types.Operator, ImportHelper):
+class ADDEV_OT_AddSinglePyAddon(bpy.types.Operator, ImportHelper):
     bl_idname = "addev.add_single_py_addon"
     bl_label = "Add single py Addon"
     bl_description = "Add single .py file addon to the dev list"
@@ -174,7 +174,7 @@ class ADDEV_AddSinglePyAddon_Operator(bpy.types.Operator, ImportHelper):
         return {"FINISHED"}
 
 
-class ADDEV_RemoveAddon_Operator(bpy.types.Operator):
+class ADDEV_OT_RemoveAddon(bpy.types.Operator):
     bl_idname = "addev.remove_addon"
     bl_label = "Remove Addon"
     bl_description = "Remove addon from dev list"
@@ -199,7 +199,7 @@ class ADDEV_RemoveAddon_Operator(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class ADDEV_ReloadAddon_Operator(bpy.types.Operator):
+class ADDEV_OT_ReloadAddon(bpy.types.Operator):
     bl_idname = "addev.reload_addon"
     bl_label = "Reload Addon"
     bl_description = "Update and reload a single addon"
@@ -222,6 +222,9 @@ class ADDEV_ReloadAddon_Operator(bpy.types.Operator):
 
         bpy.ops.preferences.addon_refresh()
 
+        module_name, raw_name = get_module_names(path)
+        self.report({'INFO'}, message=f'ADDEV: Reloaded {module_name}')
+
         return {"FINISHED"}
 
 
@@ -241,6 +244,8 @@ class ADDEV_ReloaAllAddons_Operator(bpy.types.Operator):
 
         bpy.ops.preferences.addon_refresh()
 
+        self.report({'INFO'}, message='ADDEV: Reloaded!')
+
         return {"FINISHED"}
 
 
@@ -252,10 +257,10 @@ def register():
         type=AddonGroup
     )
 
-    bpy.utils.register_class(ADDEV_AddNewAddon_Operator)
-    bpy.utils.register_class(ADDEV_AddSinglePyAddon_Operator)
-    bpy.utils.register_class(ADDEV_RemoveAddon_Operator)
-    bpy.utils.register_class(ADDEV_ReloadAddon_Operator)
+    bpy.utils.register_class(ADDEV_OT_AddNewAddon)
+    bpy.utils.register_class(ADDEV_OT_AddSinglePyAddon)
+    bpy.utils.register_class(ADDEV_OT_RemoveAddon)
+    bpy.utils.register_class(ADDEV_OT_ReloadAddon)
     bpy.utils.register_class(ADDEV_ReloaAllAddons_Operator)
 
 
@@ -263,8 +268,8 @@ def unregister():
     bpy.utils.unregister_class(AddonGroup)
     del bpy.types.Scene.addev_addons
 
-    bpy.utils.unregister_class(ADDEV_AddNewAddon_Operator)
-    bpy.utils.unregister_class(ADDEV_AddSinglePyAddon_Operator)
-    bpy.utils.unregister_class(ADDEV_RemoveAddon_Operator)
-    bpy.utils.unregister_class(ADDEV_ReloadAddon_Operator)
+    bpy.utils.unregister_class(ADDEV_OT_AddNewAddon)
+    bpy.utils.unregister_class(ADDEV_OT_AddSinglePyAddon)
+    bpy.utils.unregister_class(ADDEV_OT_RemoveAddon)
+    bpy.utils.unregister_class(ADDEV_OT_ReloadAddon)
     bpy.utils.unregister_class(ADDEV_ReloaAllAddons_Operator)
