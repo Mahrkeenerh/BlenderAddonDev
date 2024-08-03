@@ -170,6 +170,8 @@ class ADDEV_OT_AddSinglePyAddon(bpy.types.Operator, ImportHelper):
             return {"FINISHED"}
 
         addon_name = load_addon(addon_path)
+        bpy.context.scene.addev_addons.add().path = addon_path
+
         self.report({'INFO'}, message=f'Loaded: {addon_name}')
         return {"FINISHED"}
 

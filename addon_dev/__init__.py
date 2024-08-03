@@ -24,7 +24,7 @@ bl_info = {
     "author" : "Mahrkeenerh",
     "description" : "Easy addon-dev live reloading",
     "blender" : (3, 0, 0),
-    "version" : (1, 1, 0),
+    "version" : (1, 2, 0),
     "location" : "Python Console",
     "category" : "Development"
 }
