@@ -24,7 +24,7 @@ bl_info = {
     "author" : "Mahrkeenerh",
     "description" : "Easy addon-dev live reloading",
     "blender" : (3, 0, 0),
-    "version" : (1, 2, 0),
+    "version" : (1, 2, 1),
     "location" : "Python Console",
     "category" : "Development"
 }
@@ -79,16 +79,16 @@ class ADDEV_MenuPopout_Operator(bpy.types.Operator):
             row.prop(addon, 'include', text='')
             module_name, raw_name = main.get_module_names(addon.path)
             row.label(text=module_name)
-            remove_op = row.operator('addev.remove_addon', text='', icon_value=33)
+            remove_op = row.operator('addev.remove_addon', text='', icon='PANEL_CLOSE')
             remove_op.index = i
-            reload_op = row.operator('addev.reload_addon', text='', icon_value=692)
+            reload_op = row.operator('addev.reload_addon', text='', icon='FILE_REFRESH')
             reload_op.index = i
 
         self.layout.separator()
 
         row = self.layout.row()
-        row.operator('addev.add_new_addon', text='Add', icon_value=706)
-        row.operator('addev.add_single_py_addon', text='Add single .py', icon_value=706)
+        row.operator('addev.add_new_addon', text='Add', icon='IMPORT')
+        row.operator('addev.add_single_py_addon', text='Add single .py', icon='IMPORT')
 
     def invoke(self, context, event):
         return context.window_manager.invoke_props_dialog(self, width=250)
@@ -104,7 +104,7 @@ def addon_dev_header(self, context):
         self.layout.operator('wm.console_toggle', text='Console', icon='CONSOLE')
 
     self.layout.operator('addev.menu_popout', text='Addon Dev')
-    self.layout.operator('addev.reload_all_addons', text='Update All', icon_value=692)
+    self.layout.operator('addev.reload_all_addons', text='Update All', icon='FILE_REFRESH')
 
 
 def create_keymap():
